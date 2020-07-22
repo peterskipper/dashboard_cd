@@ -1,7 +1,8 @@
+name: Example Workflow
+on: [push]
 jobs:
   build:
     name: Package App
-    on: [push]
       steps:
         - name: Checkout code
           uses: actions/checkout@v2
