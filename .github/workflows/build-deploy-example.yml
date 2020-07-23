@@ -3,6 +3,7 @@ on: [push]
 jobs:
   build:
     name: Package App
+    runs-on: ubuntu-18.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
