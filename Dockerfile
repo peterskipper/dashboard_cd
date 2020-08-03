@@ -20,3 +20,7 @@ COPY config.toml /home/streamlit_user/.streamlit/
 COPY credentials.toml /home/streamlit_user/.streamlit/
 
 COPY . .
+
+EXPOSE 8501
+
+CMD streamlit run app.py
