@@ -36,8 +36,8 @@ resource "aws_security_group" "sec_grp" {
 */
 
 resource "aws_instance" "dashboard" {
-  # Amazon Linux AMI 2018.03.0
-  ami                    = "ami-02b0c55eeae6d5096"
+  # Amazon Linux AMI amzn-ami-2018.03.20200805 x86_64 ECS HVM GP2 
+  ami                    = "ami-0e18fc717d49b88a1"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [module.my_web_vpc.this_security_group_id]
 
@@ -47,7 +47,7 @@ resource "aws_instance" "dashboard" {
 
   user_data = <<-EOF
     #!/bin/bash
-    docker pull peterskipper/dashboard_cd && docker run dashboard_cd
+    docker pull peterskipper/dashboard_cd && docker run -p 8501:8501 dashboard_cd
     EOF
 
   # security_groups = [aws_security_group.sec_grp.id]
