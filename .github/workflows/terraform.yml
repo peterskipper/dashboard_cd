@@ -1,19 +1,27 @@
 name: 'Terraform'
 
+# This runs terraform when a PR is created, and again
+# when it is merged into master. You cannot trigger on a merge, BUT
+# every merge to master is followed by a push to master :)
 on:
     pull_request:
+    push:
+        branches:
+            - master
 
 jobs:
     terraform:
         name: 'Terraform'
         runs-on: ubuntu-latest
+        env:
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         steps:
         - name: Checkout
           uses: actions/checkout@v2
 
         - name: Setup Terraform
           uses: hashicorp/setup-terraform@v1
-          # with:
 
         - name: Terraform Init
           run: terraform init
