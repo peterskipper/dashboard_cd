@@ -5,10 +5,6 @@ provider "aws" {
 variable "docker_image_tag" {
   type        = string
   description = "Tag of the docker image. Comes from the git sha for this PR"
-  validation {
-    condition     = length(var.docker_image_tag) == 8
-    error_message = "Var docker_image_tag must be 8 chars long, not ${var.docker_image_tag}"
-  }
 }
 
 resource "aws_default_vpc" "default_vpc" {
