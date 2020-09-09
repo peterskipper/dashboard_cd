@@ -22,7 +22,7 @@ jobs:
         needs: Package App
         runs-on: ubuntu-latest
         if:
-            github.event_name == 'pull_request' || (github.event_name == "push" && github.branch == "master")
+            github.event_name == 'pull_request' || (github.event_name == 'push' && github.branch == 'master')
         env:
             AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
             AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
