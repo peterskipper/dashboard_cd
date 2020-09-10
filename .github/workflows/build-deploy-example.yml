@@ -43,7 +43,7 @@ jobs:
           run: terraform validate -no-color
 
         - name: Terraform Plan
-          run: terraform plan
+          run: terraform plan -var="docker_image_tag=${GITHUB_SHA::8}"
 
         - name: Terraform Apply
           run: echo ${GITHUB_SHA::8} && terraform apply -var="docker_image_tag=${GITHUB_SHA::8}" -auto-approve -input=false
