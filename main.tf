@@ -1,3 +1,11 @@
+terraform {
+  backend "s3" {
+    bucket="dashboard-cd"
+    key="global-state/terraform.tfstate"
+    region="us-east-2"
+}
+}
+
 provider "aws" {
   region = "us-east-2"
 }
@@ -7,6 +15,8 @@ variable "docker_image_tag" {
   description = "Tag of the docker image. Comes from the git sha for this PR"
 }
 
+resource "random_uuid" "uuid" {}
+
 resource "aws_default_vpc" "default_vpc" {
   tags = {
     Name = "Default VPC"
@@ -14,7 +24,7 @@ resource "aws_default_vpc" "default_vpc" {
 }
 
 resource "aws_security_group" "sec_grp" {
-  name   = "dashboard_sec_grp"
+  name   = "dashboard_sec_grp_${random_uuid.uuid.result}"
   vpc_id = aws_default_vpc.default_vpc.id
 
   egress {
@@ -50,11 +60,6 @@ resource "aws_instance" "dashboard" {
     docker pull peterskipper/dashboard_cd:${var.docker_image_tag}
     docker run -p 80:8501 peterskipper/dashboard_cd:${var.docker_image_tag}
     EOF
-}
-
-output "dashboard_ip" {
-  value       = aws_instance.dashboard.public_ip
-  description = "The public IP of the Dashboard"
 }
 
 output "dashboard_public_dns" {
