@@ -62,6 +62,11 @@ resource "aws_instance" "dashboard" {
     EOF
 }
 
+output "docker_tag" {
+  value       = var.docker_image_tag
+  description = "Docker container tag"
+}
+
 output "dashboard_public_dns" {
   value       = aws_instance.dashboard.public_dns
   description = "Public DNS for your default VPC"
